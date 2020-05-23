@@ -55,11 +55,10 @@ let isClockRunning = false;
 
 
 // toggles the timer start/pause/reset
-const clock = function(reset) {
+function clock(reset) {
 
     if (reset) {
-        console.log('reset');
-        time();
+        resetClock();
     } else {
         if (isClockRunning === true) {
             isClockRunning = false;
@@ -90,4 +89,12 @@ function time() {
 
     result += `${displayTimeSession(hours)}:${displayTimeSession(minutes)}:${displayTimeSession(seconds)}`;
     timerDisplay.innerText = result.toString();        
+}
+
+//function which resets timer
+function resetClock() {
+    clearInterval(clockTimer);
+    isClockRunning = false;
+    currentTime = startTime;
+    time();
 }
