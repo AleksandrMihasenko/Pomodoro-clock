@@ -46,12 +46,13 @@ breakPlus.addEventListener('click', () => {
 });
 
 //all the properties to run a pomodoro clock
-let startTime = 1500;
+let startTime = 15;
 let currentTime = startTime;
-let sessionTime = 1500;
-let breakTime = 300;
+let sessionTime = startTime;
+let breakTime = 30;
 let sessionCount = 0;
 let isClockRunning = false;
+let type = 'work';
 
 
 // toggles the timer start/pause/reset
@@ -66,7 +67,7 @@ function clock(reset) {
         } else {
             isClockRunning = true;
             clockTimer = setInterval(() => {
-                currentTime--;
+                stepDown();
                 time();
             }, 1000);
         }
@@ -96,5 +97,20 @@ function resetClock() {
     clearInterval(clockTimer);
     isClockRunning = false;
     currentTime = startTime;
+    time();
+}
+
+function stepDown() {
+    if (currentTime > 0) {
+        currentTime--;
+    } else if (currentTime === 0) {
+        if (type === 'work') {
+            currentTime = breakTime;
+            type = 'break';
+        } else {
+            currentTime = sessionTime;
+            type = 'work';
+        }
+    }
     time();
 }
