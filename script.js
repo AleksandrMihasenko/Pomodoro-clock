@@ -10,18 +10,18 @@ const breakPlus = document.querySelector('.break-plus');
 //add event listeners
 
 //start
-startButton.addEventListener('click', () => {
-    console.log('start');
+startButton.addEventListener('click', () => {    
+    clock();
 });
 
 //pause
-pauseButton.addEventListener('click', () => {
-    console.log('pause');
+pauseButton.addEventListener('click', () => {    
+    clock();    
 });
 
 //break
-resetButton.addEventListener('click', () => {
-    console.log('reset');
+resetButton.addEventListener('click', () => {    
+    clock(true);
 });
 
 
@@ -45,23 +45,49 @@ breakPlus.addEventListener('click', () => {
     console.log('plus');
 });
 
+//all the properties to run a pomodoro clock
+let startTime = 1500;
+let currentTime = startTime;
+let sessionTime = 1500;
+let breakTime = 300;
+let sessionCount = 0;
+let isClockRunning = false;
 
 
+// toggles the timer start/pause/reset
+const clock = function(reset) {
 
-//function clock which contains all methods and properties
-function clock() {
-    let startTime = 1500;
-    let currentTime = 1500;
-    let sessionTime = 1500;
-    let breakTime = 300;
-    let sessionCount = 0;
-
-
-    //format time
-    function time(secs) {
-        let result = '';
-        let seconds = secs % 60;
-        let minutes = parseInt(secs / 60) % 60;
-        let hours = parseInt(secs / 3600);
+    if (reset) {
+        console.log('reset');
+        time();
+    } else {
+        if (isClockRunning === true) {
+            isClockRunning = false;
+            clearInterval(clockTimer);
+        } else {
+            isClockRunning = true;
+            clockTimer = setInterval(() => {
+                currentTime--;
+                time();
+            }, 1000);
+        }
     }
+}
+
+//format time
+function time() {
+    const secs = currentTime;
+    let result = '';
+    let seconds = secs % 60;
+    let minutes = parseInt(secs / 60) % 60;
+    let hours = parseInt(secs / 3600);
+
+    
+    //add zeroes if it's less than 10
+    function displayTimeSession(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+
+    result += `${displayTimeSession(hours)}:${displayTimeSession(minutes)}:${displayTimeSession(seconds)}`;
+    timerDisplay.innerText = result.toString();        
 }
