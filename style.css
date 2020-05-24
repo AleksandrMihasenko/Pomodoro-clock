@@ -59,10 +59,19 @@ body {
     background-color: #EAE9E5;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;        
+}
+
+.session {
     font-size: 40px;
     padding: 0px 0px 10px 0px;
-    color: #00A0B0;    
+    color: #00A0B0;
+}
+
+.break {
+    font-size: 40px;
+    padding: 0px 0px 10px 0px;
+    color: #EB6841;
 }
 
 .settings {
